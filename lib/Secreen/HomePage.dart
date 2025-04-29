@@ -15,43 +15,51 @@ class Homepage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           "New Trend",
           style: TextStyle(fontWeight: FontWeight.w600, fontSize: 25),
         ),
         centerTitle: true,
         actions: [
           IconButton(
-              onPressed: () {},
-              icon: Icon(
-                FontAwesomeIcons.cartPlus,
-                color: Colors.black,
-                size: 25,
-              ))
+            onPressed: () {},
+            icon: const Icon(
+              FontAwesomeIcons.cartPlus,
+              color: Colors.black,
+              size: 25,
+            ),
+          )
         ],
       ),
-      body: Center(
-        child: Padding(
-            padding: const EdgeInsets.only(right: 16, top: 35, left: 16),
-            child: FutureBuilder<List<ProdectModel>>(
-              future: GetAllProdect().getAllProdect(),
-              builder: (context, snapshot) {
-
-                  return GridView.builder(
-                    clipBehavior: Clip.none,
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        childAspectRatio: 1.4,
-                        mainAxisSpacing: 40,
-                        crossAxisSpacing: 10),
-                    itemBuilder: (context, index) {
-                      return CustomCard();
-                    },
-                  );
-
-
-
-              },)
+      body: Padding(
+        padding: const EdgeInsets.only(right: 16, top: 35, left: 16),
+        child: FutureBuilder<List<ProdectModel>>(
+          future: GetAllProdect().getAllProdect(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(child: CircularProgressIndicator());
+            } else if (snapshot.hasError) {
+              print(snapshot.error);
+              return Center(child: Text("حدث خطأ: ${snapshot.error}"));
+            } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+              return const Center(child: Text("لا توجد بيانات متاحة"));
+            } else {
+              List<ProdectModel> products = snapshot.data!;
+              return GridView.builder(
+                clipBehavior: Clip.none,
+                itemCount: products.length,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  childAspectRatio: 1.4,
+                  mainAxisSpacing: 40,
+                  crossAxisSpacing: 10,
+                ),
+                itemBuilder: (context, index) {
+                  return CustomCard(prodect: products[index]);
+                },
+              );
+            }
+          },
         ),
       ),
     );

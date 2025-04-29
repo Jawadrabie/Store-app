@@ -22,6 +22,6 @@ class AddProdect {
           "image": image,
           "category": category,
         });
-    return ProdectModel.Fromjson(data);
+    return ProdectModel.fromJson(data);
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'Secreen/HomePage.dart';
+import 'Secreen/Update_page.dart';
 
 void main() {
   runApp(const StoreApp());
@@ -15,10 +16,9 @@ class StoreApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: Homepage.id,
       routes: {
-        Homepage.id:(context)=>Homepage(),
+        Homepage.id: (context) => Homepage(),
+        UpdateProdectPage.id: (context) => UpdateProdectPage(),
       },
-
-
     );
   }
 }

@@ -14,7 +14,7 @@ class GetAllProdect {
     List<ProdectModel> prodectsList = [];
     for (int i = 0; i < data.length; i++) {
       prodectsList.add(
-        ProdectModel.Fromjson(data[i]),
+        ProdectModel.fromJson(data[i]),
       );
     }
     return prodectsList;
