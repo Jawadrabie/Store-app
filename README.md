@@ -1,6 +1,6 @@
 # storeapp
 
-A new Flutter project.
+Using REST , HTTP(GET , POST , PUT/PATCH , DELETE)
 
 ## Getting Started
 
